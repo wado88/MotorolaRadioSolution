@@ -4,8 +4,9 @@ from flask import request
 
 main = Flask(__name__)
 
-
+#storing the device profiles in a dictionary where the key is the id of the device.
 deviceProfile = {}
+#storing the location of a device in a dictionary where the key is the id of the device.
 currentLocations = {}
 
 #Creates a radio profile with the given id, alias and allowed locations
@@ -14,10 +15,12 @@ def postRadioProfile(id):
     locationList = []
     for location in request.json["allowed_locations"]:
         locationList.append(location)
+    #saved the alias and the allowed locations of the device.
     profile = {
             "alias": request.json["alias"],
             "allowed_locations": locationList
     }
+    #the profile is then stored in a dectionary where the id is the key
     deviceProfile[id] = profile
     return jsonify({'profile': profile}), 201
 
@@ -55,4 +58,4 @@ def getRadioLocation(id):
 
 
 if __name__ == '__main__':
-    main.run(host='0.0.0.0', debug=True)
+    main.run(host='0.0.0.0')#, debug=True)
